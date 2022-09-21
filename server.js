@@ -177,9 +177,11 @@ const processResponse = (proxyRes, res, append) => {
 
 const onProxyReq = (proxyReq, req, res, options) => {
 	proxyReq.setHeader('User-Agent', proxyReq.getHeader('proxy-override-user-agent') || DEFAULT_USERAGENT);
+	
 	if (REWRITE_ACCEPT_ENCODING) {
 		proxyReq.setHeader('Accept-Encoding', 'gzip');
 	}
+	
 	proxyReq.removeHeader('roblox-id');
 	proxyReq.removeHeader('proxy-access-key');
 	proxyReq.removeHeader('proxy-target');
@@ -194,16 +196,6 @@ const onProxyReq = (proxyReq, req, res, options) => {
 };
 
 const onProxyRes = (proxyRes, req, res) => {
-
-	// let authorizationHead = req.getHeader("Authorization");
-	proxyRes.headers["ye"] = true;
-
-	// if (authorizationHead) {
-		// console.log("1_ " + authorizationHead);
-		// proxyRes.headers["yus"] = true;
-		
-	// }
-
 	const head = {
 		headers: Object.assign({}, proxyRes.headers),
 		status: {

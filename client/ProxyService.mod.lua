@@ -1,3 +1,5 @@
+--https://github.com/sentanos/ProxyService
+
 local http = game:GetService('HttpService')
 local _get = http.GetAsync
 local _post = http.PostAsync
@@ -8,25 +10,37 @@ local GET_METHODS = {'GET', 'DELETE'}
 
 local ProxyService = {}
 
-local processBody = function (body)
-  local pos, _, match = body:find('"""(.+)"""$')
-  local data = _decode(http, match)
+local processBody = function (body, secure)
+  local data
+  
+	if secure then
+		local pos, _, match = body:find('"""(.+)"""$')
+		data = _decode(http, match)
+		body = body:sub(1, pos - 1)
+	else
+		data = _decode(http, body)
+	end
+
   local res = {
     headers = data.headers,
     status = data.status,
-    body = body:sub(1, pos - 1)
+    code = data.code,
+    error = data.error,
+    body = body
   }
   return res
 end
 
+local secureMode: boolean = true -- whether or not you are using https over http
+
 local httpGet = function (...)
-  local body = _get(http, ...)
-  return processBody(body)
+  	local body = _get(http, ...)
+    return processBody(body, secureMode)
 end
 
 local httpPost = function (...)
   local body = _post(http, ...)
-  return processBody(body)
+  return processBody(body, secureMode)
 end
 
 local getHeaders = function (this, method, target, headers, overrideProto)
