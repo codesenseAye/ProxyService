@@ -187,12 +187,22 @@ const onProxyReq = (proxyReq, req, res, options) => {
 	let authorizationHead = proxyReq.getHeader("Authorization");
 
 	if (authorizationHead) {
-		console.log(authorizationHead);
+		console.log("2_ " + authorizationHead);
 		// add decoded authorization header here
 	}
 };
 
 const onProxyRes = (proxyRes, req, res) => {
+
+	let authorizationHead = req.getHeader("Authorization");
+	proxyRes.headers["ye?"] = true;
+
+	if (authorizationHead) {
+		console.log("1_ " + authorizationHead);
+		proxyRes.headers["yus"] = true;
+		
+	}
+
 	const head = {
 		headers: Object.assign({}, proxyRes.headers),
 		status: {
@@ -203,6 +213,8 @@ const onProxyRes = (proxyRes, req, res) => {
 	if (USE_OVERRIDE_STATUS) {
 		proxyRes.statusCode = 200;
 	}
+
+	
 	if (APPEND_HEAD) {
 		const append = `"""${JSON.stringify(head)}"""`;
 		processResponse(proxyRes, res, append);
