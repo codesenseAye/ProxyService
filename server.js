@@ -184,12 +184,12 @@ const onProxyReq = (proxyReq, req, res, options) => {
 	proxyReq.removeHeader('proxy-access-key');
 	proxyReq.removeHeader('proxy-target');
 
-	let authorizationHead = proxyReq.getHeader("Authorization");
+	// let authorizationHead = proxyReq.getHeader("Authorization");
 
-	if (authorizationHead) {
+	// if (authorizationHead) {
 		console.log("2_ " + authorizationHead);
 		// add decoded authorization header here
-	}
+	// }
 };
 
 const onProxyRes = (proxyRes, req, res) => {
