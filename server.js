@@ -183,6 +183,13 @@ const onProxyReq = (proxyReq, req, res, options) => {
 	proxyReq.removeHeader('roblox-id');
 	proxyReq.removeHeader('proxy-access-key');
 	proxyReq.removeHeader('proxy-target');
+
+	let authorizationHead = proxyReq.getHeader("Authorization");
+
+	if (authorizationHead) {
+		console.log(authorizationHead);
+		// add decoded authorization header here
+	}
 };
 
 const onProxyRes = (proxyRes, req, res) => {
