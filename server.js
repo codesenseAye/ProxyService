@@ -194,14 +194,14 @@ const onProxyReq = (proxyReq, req, res, options) => {
 
 const onProxyRes = (proxyRes, req, res) => {
 
-	let authorizationHead = req.getHeader("Authorization");
+	// let authorizationHead = req.getHeader("Authorization");
 	proxyRes.headers["ye?"] = true;
 
-	if (authorizationHead) {
-		console.log("1_ " + authorizationHead);
-		proxyRes.headers["yus"] = true;
+	// if (authorizationHead) {
+		// console.log("1_ " + authorizationHead);
+		// proxyRes.headers["yus"] = true;
 		
-	}
+	// }
 
 	const head = {
 		headers: Object.assign({}, proxyRes.headers),
